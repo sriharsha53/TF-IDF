@@ -51,9 +51,9 @@ public class InverseDocfreq
 		//int docss = conf.getInt("docs"); 
 		for (String valu: lis){
 		String te[]=valu.split(",");
-		float tf_idf = Float.parseFloat(te[1])*(12/sum);
-		double fin_tfidf =(Math.log(tf_idf)/Math.log(2)+1e-10);
-		context.write(key, new Text(valu+","+","+String.valueOf(fin_tfidf)));
+		float tf_idf = (float)(12/sum);
+		double fin_tfidf =Float.parseFloat(te[1])*(Math.log(tf_idf)/Math.log(2));
+		context.write(key, new Text(valu+",\t"+String.valueOf(fin_tfidf)));
 	    }
 	   
     }

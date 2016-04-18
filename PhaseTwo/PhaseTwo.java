@@ -43,16 +43,26 @@ public class PhaseTwo
 	    {
 		int sum = 0;
 		ArrayList<String> valuelist=new ArrayList<String>();
-    
+    int i=0;
 for (Text text : values) {
     valuelist.add(text.toString());
     String content[] = text.toString().split(",");
     sum=sum+Integer.parseInt(content[1]);
 }
-
+    List<Float> valli = new ArrayList<Float>();
 for (String text : valuelist) {
-    String outvalue = text + "," + sum;
-    context.write(key, new Text(outvalue));
+    String content1[] = text.split(",");
+    float freq = Float.parseFloat(content1[1])/sum;
+    valli.add(freq);    
+    }
+    float maximu = Collections.max(valli);
+for (String text : valuelist){
+    float norm_freq = valli.get(i)/maximu;
+    i++;
+    String content2[] = text.split(",");
+    String keys = content2[0];
+    String outvalue = key.toString() +"," + norm_freq;
+    context.write(new Text (keys), new Text(outvalue));    
 }
 	//context.write(key, new Text(values.toString()+","+sum));
     }

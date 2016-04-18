@@ -24,13 +24,7 @@ public class InverseDocfreq
 	{
 	    String inputLine = value.toString(); //input is coming from the output file from tf
 	    String temp[] = inputLine.split("\t"); //spliting input string to get pair of word,document name and frequency
-	    //int wordCntr = Integer.parseInt(temp[1]);//getting word frequency
-	    //String docPart[]=temp[1].split(",");//seperating document name and freq
-	    //set.add(Integer.parseInteger(docPart[0]));
-	    //String word = temp[0];//getting the input word
-	    //outKey.set(word);
-	   // conf1.setInt("docs",set.size());
-            context.write(new Text(temp[0]),new Text(temp[1]));
+	    context.write(new Text(temp[0]),new Text(temp[1]));
 	    
 	    //loop is not required in this mapper as we know that the input string will only have 3 parts
 	}
@@ -48,11 +42,11 @@ public class InverseDocfreq
 		{      lis.add(val.toString());
 		       sum += 1;
 		}
-		//int docss = conf.getInt("docs"); 
+		 
 		for (String valu: lis){
 		String te[]=valu.split(",");
-		float tf_idf = Float.parseFloat(te[1])*(12/sum);
-		double fin_tfidf =(Math.log(tf_idf)/Math.log(2)+1e-10);
+		float tf_idf = (float)(12/sum);
+		double fin_tfidf =Float.parseFloat(te[1])*(Math.log(tf_idf)/Math.log(2));
 		context.write(key, new Text(valu+",\t"+String.valueOf(fin_tfidf)));
 	    }
 	   
